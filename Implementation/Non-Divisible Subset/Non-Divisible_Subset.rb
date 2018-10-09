@@ -8,7 +8,7 @@ require 'active_support/core_ext'
 # Complete the nonDivisibleSubset function below.
 def nonDivisibleSubset(k, s)
   potentialSubsets = []
-  for i in 2..s.length do
+  for i in 1..s.length do
     subsetArray = s.combination(i).to_a
     subsetArray.each { |x| potentialSubsets << x}
   end
