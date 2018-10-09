@@ -30,8 +30,6 @@ def validSubset(subset, k)
   return true
 end
 
-fptr = File.open(ENV['OUTPUT_PATH'], 'w')
-
 nk = gets.rstrip.split
 
 n = nk[0].to_i
@@ -42,7 +40,4 @@ S = gets.rstrip.split(' ').map(&:to_i)
 
 result = nonDivisibleSubset k, S
 
-fptr.write result
-fptr.write "\n"
-
-fptr.close()
+puts result
