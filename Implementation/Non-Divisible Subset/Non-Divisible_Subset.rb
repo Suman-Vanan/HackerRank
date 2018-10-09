@@ -2,6 +2,8 @@
 
 require 'json'
 require 'stringio'
+require 'active_support'
+require 'active_support/core_ext'
 
 # Complete the nonDivisibleSubset function below.
 def nonDivisibleSubset(k, s)
@@ -30,14 +32,19 @@ def validSubset(subset, k)
   return true
 end
 
-nk = gets.rstrip.split
+# fptr = File.open(ENV['OUTPUT_PATH'], 'w')
+txt = open("./test.txt")
+
+nk = txt.gets.rstrip.split
 
 n = nk[0].to_i
 
 k = nk[1].to_i
 
-S = gets.rstrip.split(' ').map(&:to_i)
+S = txt.gets.rstrip.split(' ').map(&:to_i)
 
 result = nonDivisibleSubset k, S
 
 puts result
+
+txt.close()
