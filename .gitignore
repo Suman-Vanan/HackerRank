@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/ruby,macos,rubymine
+# Created by https://www.gitignore.io/api/ruby,macos,rubymine,visualstudiocode
 
 ### macOS ###
 # General
@@ -160,5 +160,12 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# End of https://www.gitignore.io/api/ruby,macos,rubymine
+
+# End of https://www.gitignore.io/api/ruby,macos,rubymine,visualstudiocode
