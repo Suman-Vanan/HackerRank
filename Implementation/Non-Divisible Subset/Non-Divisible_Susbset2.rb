@@ -9,7 +9,6 @@ def nonDivisibleSubset(k, s)
   s.each do |num|
     remainderArray << num % k
   end
-  puts "remainderArray is: #{remainderArray}"
 
   counts = Hash.new 0
   remainderArray.each do |remainder|
@@ -17,11 +16,15 @@ def nonDivisibleSubset(k, s)
   end
 
   result = s.length
-  puts "counts is: #{counts}"
   # counts: {1=>3, 2=>1}
-  # distinctRemaindersArray = counts.keys # [1, 2]
+
   upperLimit = k / 2
   for i in (1..upperLimit)
+    if i == k-i 
+      # we have reached the midpoint
+      result -= counts[i]-1
+      next
+    end
     smallerRemainderCount = counts[i] # when i=1, 3
     largerRemainderCount = counts[k-i] # i=1, 1
     if (smallerRemainderCount == 0 || largerRemainderCount == 0)
