@@ -4,6 +4,8 @@ require 'json'
 require 'stringio'
 
 # Complete the nonDivisibleSubset function below.
+
+# This solution is in O(n)
 def nonDivisibleSubset(k, s)
   remainderArray = []
   s.each do |num|
@@ -16,12 +18,15 @@ def nonDivisibleSubset(k, s)
   end
 
   result = s.length
-  # counts: {1=>3, 2=>1}
 
   upperLimit = k / 2
+  # Since we are 'pairing' each remainder value with it's partner (that sums up to k),
+  # we only iterate until the middle of the set of unique remainder values
   for i in (1..upperLimit)
     if i == k-i 
       # we have reached the midpoint
+      # Since the midpoint values have no other values to partner with,
+      # can only add one of these values to our largest set
       result -= counts[i]-1
       next
     end
