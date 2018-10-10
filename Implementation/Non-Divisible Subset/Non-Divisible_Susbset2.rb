@@ -39,7 +39,7 @@ def nonDivisibleSubset(k, s)
   end
 
   numOfZeroRemainder = counts[0]
-  if (numOfZeroRemainder > 1)
+  if (numOfZeroRemainder >= 1)
     numOfZeroRemainder -= 1
   end
   result -= numOfZeroRemainder
