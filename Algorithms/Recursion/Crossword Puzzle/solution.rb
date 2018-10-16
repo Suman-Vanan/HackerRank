@@ -9,112 +9,107 @@ require 'stringio'
 def crosswordPuzzle(crossword, words)
 
   words_array = words.split(';')
-  words_array.sort_by! { |word| word.length } # sort in order of ascending word length
-
-  # Place the biggest word first, then place the smaller words
-  # Upon finding a proper slot, place the first letter of the word.
-  # Then, place the 2nd letter on all adjacent available cells. 
-  # If unable to place a letter, then terminate and return nil as the base case.
-  # If able to place all the letters, then return the crossword 2d array with that word placed.
-  # Move on to the next word.
-
+  # words_array.sort_by! { |word| word.length } # sort in order of ascending word length
+  $solved = false
   solve(crossword, words_array)
 end
 
-def solve(board, words_array)
+def possibleDirections(board, word)
 
-  solved = false
+  result = []
+  length = word.length
 
-  if words_array.empty?
-    solved = true
-    return board
+  for i in (0..9)
+    for j in (0..9)
+
+      properSlotH = true
+      properSlotV = true
+
+      for k in (0..length-1)
+        # Horizontal direction, axis marked as 0
+        if j < 10-length+1
+          if not ['-', word[k]].include?(board[i][j+k])
+            properSlotH = false
+          end
+        end
+        # Vertical direction, axis marked as 1
+        if i < 10-length+1
+          if not ['-', word[k]].include?(board[i+k][j])
+            properSlotV = false
+          end
+        end
+      end
+      
+      if properSlotH && j< 10-length+1
+        result << [i, j, 0]
+      end
+      if properSlotV && i<10-length+1
+        result << [i, j, 1]
+      end
+    end
   end
-
-  word = words_array.pop
-  possible_locations = get_possible_locations(board, word)
-
-  possible_locations.each do |location|
-    move(board, word, location)
-		solve(board, words_array)
-		revert(board, word, location)
-  end
-  words_array << word
+  
+  result
 end
 
-# Write the word on the board at the specified location
-def move(board, word, location)
-  i = location[0]
-  j = location[1]
-  axis = location[2]
+def move(board, word, start_location)
+  i = start_location[0]
+  j = start_location[1]
+  axis = start_location[2]
+
+  length = word.length
 
   if axis == 0
-    for k in (0..word.length-1)
+    for k in (0..length-1)
       board[i][j+k] = word[k]
     end
-  else
-    for k in (0..word.length-1)
-      board[i+k][j] = word[k]
-    end  
-  end
+  else 
+    for k in (0..length-1)
+      board[i+k][j] = word[k] 
+    end
+  end 
 end
 
-# revert move
-def revert(board, word, location)
-  i = location[0]
-  j = location[1]
-  axis = location[2]
+def rollback(board, word, start_location)
+  i = start_location[0]
+  j = start_location[1]
+  axis = start_location[2]
 
-  if axis == 0 # horizontal
-		for k in (0..word.length-1)
-      board[i][j + k] = '-'
-    end  
-	else # axis 1 is vertical
-		for k in (0..word.length-1)
-      board[i + k][j] = '-'
-    end  
-  end
-end    
-
-def get_possible_locations(board, word)
-  possible_locations = []
-  # horizontal possible locations
-  for i in (0..10-1)
-    for j in (0..10-word.length)
-      good = true
-      for k in (0..word.length-1)
-        if board[i][j+k] != '-' && board[i][j] != word[k]
-          good = false
-          break
-        end
-      end    
-      
-      if good
-        possible_locations << [i, j, 0] 
-        # 0 indicates that this is for horitontal axis
-      end  
+  length = word.length
+  
+  if axis == 0
+    for k in (0..length-1)
+      board[i][j+k] = "-"
+    end
+  else 
+    for k in (0..length-1)
+      board[i+k][j] = "-"
     end
   end
-
-  # vertical possible locations
-  for i in (0..10-word.length)
-    for j in (0..10-1)
-      good = true
-      for k in (0..word.length-1)
-        if board[i+k][j] != '-' && board[i][j] != word[k]
-          good = false
-          break
-        end
-      end    
-      
-      if good
-        possible_locations << [i, j, 1] 
-        # 0 indicates that this is for vertical axis
-      end  
-    end
-  end
-
-  possible_locations
 end  
+
+def solve(board, words)
+  $solved
+  if words.empty?
+    if not $solved
+      return board
+    end
+    $solved = true
+    return
+  end
+
+  word = words.pop
+
+  possibleDirections(board, word).each do |direction|
+    move(board, word, direction)
+    solve(board, words)
+    rollback(board, word, direction)
+  end
+  
+  # words << word
+  board
+end
+  
 
 test = File.open("./test.txt")
 
