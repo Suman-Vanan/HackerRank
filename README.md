@@ -16,7 +16,19 @@ Good luck, & have fun! :sunglasses:
 
 # Algorithms
 
-| Subdomain | Challenge             | Points | Solution |
-| :-------: | :-------------------: | :----: | :------: |
-| Strings   | Sherlock and Anagrams | ?      | ?        |
+| Subdomain      | Challenge                | Points | Solution |
+| :------------: | :----------------------: | :----: | :------: |
+| Greedy         | Max Min                  | 35     | ?        |
+| Implementation | Minimum Distances        | 20     | ?        |
+| Implementation | Non-Divisible Subset     | 20     | ?        |
+| Implementation | Designer PDF Viewer      | 20     | ?        |
+| Implementation | 3D Surface Area          | 30     | ?        |
+| Implementation | Encryption               | 30     | ?        |
+| Recursion      | Crossword Puzzle         | 30     | ?        |
+| Strings        | Highest Value Palindrome | 30     | ?        |
+| Strings        | Sherlock and Anagrams    | 50     | ?        |
+
+
+
+
 
